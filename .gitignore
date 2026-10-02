@@ -1,18 +1,18 @@
 # ============================================================
-# Internal-only files — KHÔNG share candidate
+# Internal-only files — DO NOT share with candidates
 # ============================================================
-# Bao gồm: README internal, rubric, reference-findings,
+# Includes: internal README, rubric, reference-findings,
 # extract.sql, anonymize.py, mapping.csv, expected_status.csv,
-# và mọi dữ liệu raw với tên thật.
+# and all raw data with real names.
 _internal/
 **/_internal/
 
-# Phòng hờ: nếu raw/ bị copy ngoài _internal/ vẫn bị chặn
+# Safety net: block raw/ even if it is copied outside _internal/
 **/raw/
 *_raw.csv
 
 # ============================================================
-# Candidate submissions (nếu nhận submission đặt local)
+# Candidate submissions (if submissions are stored locally)
 # ============================================================
 submissions/
 *.submission.*
@@ -31,7 +31,7 @@ desktop.ini
 *.iml
 
 # ============================================================
-# Python (candidate có thể làm bài bằng pandas/jupyter)
+# Python (candidates may use pandas/jupyter)
 # ============================================================
 __pycache__/
 *.py[cod]
@@ -44,7 +44,7 @@ env/
 .python-version
 
 # ============================================================
-# Data outputs (file phái sinh, không phải bộ test gốc)
+# Data outputs (derived files, not part of the original test)
 # ============================================================
 *.parquet
 *.pkl

@@ -1,136 +1,137 @@
 # Data Analyst Assessment — Smartlog (customer: AcmeFoods)
 
-Chào bạn, cảm ơn vì đã ứng tuyển vị trí **Data Analyst** tại **Smartlog**.
+Hi, and thank you for applying for the **Data Analyst** role at **Smartlog**.
 
-Smartlog cung cấp nền tảng **Control Tower** + đội DA hỗ trợ phân tích / build dashboard cho khách hàng logistics. Là DA Smartlog, bạn sẽ **làm việc trên dữ liệu vận hành của khách**, output chính là **dashboard + insight report** cho stakeholder phía khách (thường là Supply Chain Manager). Bài test này mô phỏng đúng tình huống đó — bạn vừa được assign vào project của 1 khách giả định, **AcmeFoods**.
+Smartlog provides a **Control Tower** platform plus a DA team that helps logistics customers analyze their data and build dashboards. As a Smartlog DA, you will **work on the customer's operational data**. The main outputs are **dashboards + insight reports** for the customer's stakeholders (usually the Supply Chain Manager). This test simulates exactly that situation — you have just been assigned to the project of a fictional customer, **AcmeFoods**.
 
-Đây là bài take-home để bọn mình hiểu cách bạn **tiếp cận dữ liệu khách mới**, **đặt câu hỏi đúng**, và **kể câu chuyện cho stakeholder business (không phải dev nội bộ)**. KHÔNG có "đáp án đúng" duy nhất — quan trọng là cách bạn tư duy.
-
----
-
-## Thông tin chung
-
-- **Thời gian làm bài**: ~3 giờ target, hard-cap 4 giờ (timeboxed — đừng làm quá 4 giờ, bọn mình ưu tiên cách bạn quản lý thời gian hơn là làm hết mọi thứ).
-- **Hạn nộp**: 48 giờ sau khi nhận đề.
-- **Tool**: tự do chọn — SQL (DuckDB/SQLite/Postgres tuỳ bạn), Python (pandas/polars), R, Excel/Google Sheets, Power BI, Tableau, Metabase, Looker Studio... bất cứ gì bạn quen tay.
-- **Ngôn ngữ**: tiếng Việt hoặc tiếng Anh đều được, đồng nhất 1 thứ là OK.
+This is a take-home test to help us understand how you **approach a new customer's data**, **ask the right questions**, and **tell a story to business stakeholders (not internal developers)**. There is NO single "right answer" — what matters is how you think.
 
 ---
 
-## Bối cảnh
+## General information
 
-**AcmeFoods Vietnam** (khách hàng giả định của Smartlog) là công ty FMCG bánh kẹo, phân phối qua nhiều kênh (siêu thị, tạp hoá, e-com, horeca). Họ **thuê ngoài toàn bộ vận chuyển** qua một nhóm nhỏ nhà vận tải đối tác. Mỗi tháng đội logistics của AcmeFoods có cuộc họp với **Supply Chain Manager (SC Manager)** — đây là stakeholder phía khách mà bạn (DA Smartlog) sẽ build dashboard và gửi insight.
-
-Bạn vừa được assign vào project AcmeFoods và nhận dataset **3 tháng vận hành Feb-Apr 2026 (01/02 → 30/04/2026)** từ hệ thống Smartlog Control Tower. Đọc kĩ `dataset/README.md` trước khi bắt đầu — file đó mô tả 5 CSV (shipments, trips, carriers, locations, products) và quan hệ giữa chúng.
-
-Bọn mình **KHÔNG** đưa sẵn danh sách KPI cần tính, **KHÔNG** đưa câu hỏi cụ thể cần trả lời. Khách hàng thật cũng thường không biết họ muốn dashboard hiển thị cái gì — phần lớn giá trị của 1 DA Smartlog giỏi nằm ở chỗ **biết phải hỏi câu gì** trước khi viết SQL và build widget.
-
----
-
-## Yêu cầu
-
-Bài chia làm 4 phần. **Bạn không bắt buộc làm hết** — nếu thời gian eo hẹp, ưu tiên Phần 1 và 3 (bắt buộc), Phần 2 và 4 chọn 1.
-
-### Phần 1 (BẮT BUỘC) — Data Profiling
-
-Trước khi phân tích bất cứ gì, hãy **khám phá dữ liệu**. Viết ngắn (~300-500 từ) trả lời:
-
-1. Dataset có bao nhiêu row mỗi file? Date range thực tế là gì?
-2. Có **data quality issue** nào bạn phát hiện được? (vd NULL, duplicate, outlier, value lạ, inconsistent...) — list càng nhiều càng tốt.
-3. **3-5 quan sát đầu tiên** bạn thấy thú vị / đáng đào sâu. Quan sát không nhất thiết phải là KPI — có thể là pattern, anomaly, phân bố lạ, mối quan hệ giữa cột.
-4. Dựa trên những gì bạn thấy, **đề xuất 2-3 câu hỏi business** mà SC Manager có thể quan tâm.
-
-> Tip: chạy `.describe()` / `COUNT(*)` / `GROUP BY` đơn giản trước khi nhảy vào tính KPI phức tạp. Profile là nền tảng — làm cẩn thận bước này thường tiết kiệm thời gian sau.
+- **Who takes this test**: all DA candidates, from **interns** to **experienced analysts**. We adjust our expectations to your level of experience — an intern is not expected to produce the same depth as a senior analyst.
+- **Time**: target ~3 hours, hard cap 4 hours (timeboxed — please do not spend more than 4 hours; we care more about how you manage your time than about finishing everything).
+- **Deadline**: 48 hours after you receive the test.
+- **Tools**: your choice — SQL (DuckDB/SQLite/Postgres, etc.), Python (pandas/polars), R, Excel/Google Sheets, Power BI, Tableau, Metabase, Looker Studio... anything you are comfortable with.
+- **Language**: English or Vietnamese — both are fine, just use one consistently.
 
 ---
 
-### Phần 2 (CHỌN 1 với Phần 4) — Đào sâu 1 KPI bạn tự định nghĩa
+## Context
 
-Chọn **1 KPI quan trọng** mà bạn thấy có thể tính từ dataset này. Bạn tự định nghĩa metric, công thức, và lý do tại sao nó quan trọng.
+**AcmeFoods Vietnam** (a fictional Smartlog customer) is an FMCG confectionery company that sells through several channels (supermarkets, grocery stores, e-commerce, horeca). They **outsource all of their transport** to a small group of partner carriers. Every month, the AcmeFoods logistics team meets with the **Supply Chain Manager (SC Manager)** — this is the customer-side stakeholder for whom you (the Smartlog DA) build dashboards and send insights.
 
-Một số ý tưởng (không exhaustive, không bắt buộc theo): giao đúng giờ, giao đủ hàng, tỉ lệ tận dụng xe, lead time, hiệu suất nhà vận tải, chi phí ngầm (vd over-delivery), ... — hoặc một metric khác bạn nghĩ ra.
+You have just been assigned to the AcmeFoods project and received a dataset covering **3 months of operations, Feb-Apr 2026 (2026-02-01 → 2026-04-30)** from the Smartlog Control Tower system. Read `dataset/README.md` carefully before you start — it describes the 5 CSV files (shipments, trips, carriers, locations, products), how they relate to each other, and a glossary of terms.
 
-Yêu cầu:
-1. **Định nghĩa rõ ràng**: tên metric, công thức (text hoặc SQL), tại sao nó quan trọng cho business. Nếu gặp NULL hoặc edge case, bạn xử lý thế nào? Giải thích trade-off.
-2. **Tính theo ≥ 2 chiều slice**: tháng, kênh bán, kho, khu vực giao, carrier, vehicle type, cargo group... tuỳ bạn chọn.
-3. **Bảng + ít nhất 1 chart** trình bày kết quả.
-4. **Nhận xét 3-5 câu**: số nói gì? Có gì bất thường?
+We do **NOT** give you a list of KPIs to calculate, and we do **NOT** give you specific questions to answer. Real customers often do not know what they want their dashboard to show either — much of the value of a good Smartlog DA comes from **knowing which questions to ask** before writing SQL and building charts.
 
 ---
 
-### Phần 3 (BẮT BUỘC) — Email từ SC Manager
+## Requirements
 
-SC Manager gửi bạn 1 email ngắn:
+The test has 4 parts. **You do not have to complete all of them** — if time is short, prioritize Part 1 and Part 3 (required), then choose either Part 2 or Part 4.
 
-> *"Hi bạn,*
-> 
-> *Bạn vừa nhận data 3 tháng vận hành. Cho mình hỏi nhanh:*
-> 
-> *(a) Trong 3 tháng này có **gì đáng lưu ý** không? Pattern gì lạ, anomaly gì cần để ý, hay carrier/region/vehicle nào đang gây vấn đề?*
-> 
-> *(b) Nếu phải chọn **1 vấn đề ưu tiên xử lý** trong tuần tới, bạn pick cái gì? Tại sao là cái đó chứ không phải cái khác?*
-> 
-> *(c) Bạn đề xuất action gì? Cụ thể: ai cần làm gì, đo bằng metric nào, mục tiêu trong bao lâu?"*
+### Part 1 (REQUIRED) — Data Profiling
 
-Trả lời trong ~400-600 từ, kèm 1-2 chart/bảng để support.
+Before analyzing anything, **explore the data**. Write a short answer (~300-500 words) covering:
 
-**Lưu ý**:
-- Bạn tự chọn **cái gì là "đáng lưu ý"** — không có guideline trước. Đây là phần test khả năng đặt câu hỏi.
-- Nếu data **không** support kết luận, hãy nói thẳng "không có evidence" thay vì bịa.
-- Đề xuất hành động phải **cụ thể**: làm gì, ai làm, đo bằng gì để biết thành công.
-- Phân biệt rõ trong câu trả lời: cái nào là **fact** (số nói), cái nào là **hypothesis** (bạn đoán).
+1. How many rows does each file have? What is the actual date range?
+2. What **data quality issues** can you find? (e.g. NULLs, duplicates, outliers, strange values, inconsistencies...) — list as many as you can.
+3. **3-5 first observations** that you find interesting or worth digging into. They do not have to be KPIs — they can be patterns, anomalies, unusual distributions, or relationships between columns.
+4. Based on what you see, **suggest 2-3 business questions** the SC Manager might care about.
+
+> Tip: run a simple `.describe()` / `COUNT(*)` / `GROUP BY` first before jumping into complex KPIs. Profiling is the foundation — doing it carefully usually saves time later.
 
 ---
 
-### Phần 4 (CHỌN 1 với Phần 2) — Đề xuất 1 widget dashboard
+### Part 2 (CHOOSE Part 2 OR Part 4) — Deep dive into 1 KPI you define
 
-> Phần này phản ánh sát công việc thực tế của DA Smartlog — bạn không bắt buộc chọn, nhưng nếu chọn thì đây là cơ hội thể hiện tư duy "build cho khách dùng" (chứ không chỉ phân tích nội bộ).
+Choose **1 important KPI** that you think can be calculated from this dataset. You define the metric, the formula, and why it matters.
 
-Nếu được build **1 widget duy nhất** trên dashboard Control Tower của SC Manager AcmeFoods, bạn chọn gì?
+Some ideas (not a complete list, and you do not have to use them): on-time delivery, in-full delivery, vehicle fill rate, lead time, carrier performance, hidden costs (e.g. over-delivery), ... — or any other metric you come up with.
 
-1. **Câu hỏi widget trả lời**: 1 câu rõ ràng.
-2. **Visualization**: dạng chart gì? (bar / line / heatmap / KPI card / table / ...)
-3. **Mockup**: vẽ tay / dùng tool / mô tả bằng chữ — không cần đẹp, cần truyền đạt.
+Requirements:
+1. **Clear definition**: metric name, formula (text or SQL), and why it matters for the business. How do you handle NULLs and edge cases? Explain the trade-offs.
+2. **Break it down by at least 2 dimensions**: month, sales channel, warehouse, delivery area, carrier, vehicle type, cargo group... your choice.
+3. **A table + at least 1 chart** to present the results.
+4. **3-5 sentences of commentary**: what do the numbers say? Is anything unusual?
+
+---
+
+### Part 3 (REQUIRED) — Email from the SC Manager
+
+The SC Manager sends you a short email:
+
+> *"Hi,*
+>
+> *You just got 3 months of operations data. Quick questions:*
+>
+> *(a) Is there **anything worth noting** in these 3 months? Any strange patterns, anomalies to watch, or carriers/regions/vehicle types causing problems?*
+>
+> *(b) If you had to pick **1 priority issue** to fix next week, which would you pick? Why that one and not something else?*
+>
+> *(c) What actions do you recommend? Specifically: who should do what, which metric do we use to measure it, and what is the target and timeline?"*
+
+Reply in ~400-600 words, with 1-2 charts/tables to support your answer.
+
+**Notes**:
+- You decide **what is "worth noting"** — there is no guideline. This part tests your ability to ask questions.
+- If the data does **not** support a conclusion, say clearly "there is no evidence" instead of making something up.
+- Recommended actions must be **specific**: what to do, who does it, and how to measure success.
+- Clearly separate what is a **fact** (the numbers say so) and what is a **hypothesis** (your guess).
+
+---
+
+### Part 4 (CHOOSE Part 2 OR Part 4) — Propose 1 dashboard widget
+
+> This part is very close to the real day-to-day work of a Smartlog DA. You do not have to choose it, but if you do, it is a chance to show a "build for the customer to use" mindset (not just internal analysis).
+
+If you could build **only 1 widget** on the AcmeFoods SC Manager's Control Tower dashboard, what would it be?
+
+1. **The question the widget answers**: 1 clear sentence.
+2. **Visualization**: what chart type? (bar / line / heatmap / KPI card / table / ...)
+3. **Mockup**: hand-drawn / made with a tool / described in words — it does not need to look nice, it needs to communicate the idea.
 4. **Refresh frequency**: real-time / hourly / daily / weekly?
-5. **Edge case**: empty state hiển thị gì? Lỗi load data thì sao?
-6. **Lý do chọn**: tại sao widget này thay vì widget khác? (3-5 câu)
+5. **Edge cases**: what does the empty state show? What happens if data fails to load?
+6. **Why this one**: why this widget and not another? (3-5 sentences)
 
 ---
 
-## Deliverable
+## Deliverables
 
-Submit 1 file zip hoặc link Google Drive với:
+Submit 1 zip file or a Google Drive link with:
 
-1. **Báo cáo chính** (`report.pdf` hoặc `report.md` hoặc notebook `.ipynb`).
-2. **Code/query** bạn dùng (nếu có): file `.sql`, `.py`, `.xlsx`... đặt trong folder `code/`.
-3. **Chart export** (nếu chart không nhúng được trong báo cáo).
-4. **File `notes.md`** (1 trang) — phần "behind-the-scenes":
-   - Bạn dành nhiều thời gian nhất ở phần nào? Tại sao?
-   - Có giả định/cách tiếp cận nào bạn cân nhắc rồi bỏ? Ngắn gọn 1-2 câu cho mỗi.
-   - Nếu có thêm 2 giờ nữa, bạn sẽ làm gì tiếp?
+1. **Main report** (`report.pdf`, `report.md` or a notebook `.ipynb`).
+2. **Code/queries** you used (if any): `.sql`, `.py`, `.xlsx` files... in a `code/` folder.
+3. **Chart exports** (if charts cannot be embedded in the report).
+4. **A `notes.md` file** (1 page) — the "behind the scenes":
+   - Which part did you spend the most time on? Why?
+   - Were there any assumptions or approaches you considered and then dropped? 1-2 short sentences for each.
+   - If you had 2 more hours, what would you do next?
 
 ---
 
-## Tiêu chí chấm
+## Scoring criteria
 
-Bài được chấm theo 4 trục (chi tiết bọn mình sẽ chia sẻ sau buổi discuss):
+Your submission is scored on 4 areas (we will share the details after the discussion session):
 
-| # | Trục | Trọng số | Bạn được đánh giá dựa trên |
+| # | Area | Weight | What we look at |
 |---|---|---|---|
-| 1 | **Curiosity & Framing** | 30% | Bạn có **đặt được câu hỏi đúng** trước khi tính không? Profile có sâu không? Phân biệt fact/hypothesis có rõ không? |
-| 2 | **Execution** | 25% | Cách bạn viết query / pandas / Excel — đúng, hiệu quả, repro được? Định nghĩa metric có defensible không? |
-| 3 | **Insight quality** | 25% | Bạn quan sát được pattern gì? Decompose root cause không? Recommendation có actionable không? |
-| 4 | **Communication** | 20% | Stakeholder business (KHÔNG biết code) đọc có hiểu không? Chart có rõ không? |
+| 1 | **Curiosity & Framing** | 30% | Did you **ask the right questions** before calculating? How deep is your profiling? Do you clearly separate fact from hypothesis? |
+| 2 | **Execution** | 25% | How you write queries / pandas / Excel — correct, efficient, reproducible? Are your metric definitions defensible? |
+| 3 | **Insight quality** | 25% | What patterns did you find? Did you break down the root cause? Are your recommendations actionable? |
+| 4 | **Communication** | 20% | Can a business stakeholder (who does NOT know code) understand it? Are the charts clear? |
 
 ---
 
-## Một vài lưu ý
+## A few notes
 
-- **Không cần làm "hoàn hảo"** — bọn mình quan tâm **cách bạn nghĩ** hơn là số lượng output. 1 phân tích sâu thường giá trị hơn 5 phân tích nông.
-- **Không có KPI nào là "đáp án đúng"** trong bài này. Bạn chọn OTIF, On-time, In-full, VFR, Lead time, Carrier perf, hay metric nào khác — đều OK miễn là bạn defend được lựa chọn.
-- **Đừng AI-wash**: nếu bạn dùng AI hỗ trợ, OK — nhưng phải hiểu output. Trong buổi discuss sẽ có câu hỏi đào sâu, không hiểu sẽ lộ ngay.
-- **Note lại assumption**: nếu có chỗ trong đề bạn thấy chưa rõ, **đừng hỏi lại** — hãy ghi giả định của bạn vào báo cáo (vd "tôi assume X vì Y") rồi tiếp tục làm. Khả năng tự nêu giả định và defense được nó là 1 phần bài test.
+- **It does not need to be "perfect"** — we care more about **how you think** than about the amount of output. 1 deep analysis is usually worth more than 5 shallow ones.
+- **No KPI is the "right answer"** in this test. Whether you choose OTIF, On-Time, In-Full, VFR, lead time, carrier performance, or another metric — it is all fine as long as you can defend your choice.
+- **Do not just copy AI output**: using AI to help is OK — but you must understand the output. The discussion session will include follow-up questions, and it will be obvious if you do not understand your own work.
+- **Write down your assumptions**: if something in the test is unclear, **do not ask us** — write your assumption in the report (e.g. "I assume X because Y") and keep going. Being able to state and defend your own assumptions is part of the test.
 
-Chúc bạn làm bài vui.
+Have fun with it.
 
 — Hiring Team, Smartlog

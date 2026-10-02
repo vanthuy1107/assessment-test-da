@@ -1,111 +1,135 @@
 # Dataset — Smartlog × AcmeFoods (Sample, Feb-Apr 2026)
 
-Bộ dữ liệu mẫu **export từ Smartlog Control Tower** cho 1 khách hàng giả định — **AcmeFoods Vietnam** — một công ty bánh kẹo / thực phẩm FMCG, trong **3 tháng vận hành Feb-Apr 2026 (01/02/2026 → 30/04/2026)**.
+A sample dataset **exported from Smartlog Control Tower** for a made-up customer — **AcmeFoods Vietnam** — an FMCG confectionery / snack food company, covering **3 months of operations, Feb-Apr 2026 (2026-02-01 → 2026-04-30)**.
 
-> **Lưu ý**: Đây là dataset hư cấu dùng cho mục đích phỏng vấn DA tại Smartlog. Tên khách, nhà vận tải, thương hiệu, kho, khu vực giao đều là tên giả. Số liệu (ngày, khối lượng, tỉ lệ) được giữ phân phối thực tế để bài phân tích có ý nghĩa.
-
----
-
-## Bối cảnh kinh doanh
-
-AcmeFoods (khách hàng giả định của Smartlog) sản xuất bánh kẹo & đồ ăn nhẹ, phân phối qua nhiều kênh (siêu thị, cửa hàng tạp hoá, e-commerce, horeca). Công ty có **mạng lưới kho** trên cả nước, và **thuê ngoài 100% vận chuyển** qua một nhóm nhỏ nhà vận tải đối tác. Vận hành logistics của AcmeFoods chạy trên nền tảng **Smartlog Control Tower** — dataset bạn nhận là export từ chính nền tảng này.
-
-Mỗi đơn hàng (Sales Order, gọi tắt **SO**) đi qua các mốc thời gian:
-1. **GI date** — ngày xuất kho (Goods Issue).
-2. **ETD planned** — thời điểm dự kiến xe rời kho.
-3. **ETA planned** — thời điểm dự kiến giao đến khách.
-4. **ATD actual** — thời điểm xe thực tế rời kho.
-5. **ATA actual** — thời điểm thực tế giao tới khách.
-
-Đội logistics của AcmeFoods cần các báo cáo / dashboard định kỳ phục vụ **Supply Chain Manager (SC Manager)** phía họ. DA Smartlog (tức là bạn, trong tình huống này) là người build các dashboard + insight đó. Cái gì là báo cáo phù hợp — đó là phần bạn tự khám phá.
+> **Note**: This is a fictional dataset used for DA interviews at Smartlog. Customer, carrier, brand, warehouse and delivery area names are all fake. The numbers (dates, volumes, rates) keep realistic distributions so the analysis is meaningful.
 
 ---
 
-## Cấu trúc dataset
+## Business context
 
-5 file CSV ở cùng folder này, encoding UTF-8 với BOM (Excel mở thẳng được):
+AcmeFoods (a fictional Smartlog customer) makes confectionery and snacks, and sells through several channels (supermarkets, traditional grocery stores, e-commerce, horeca). The company has a **network of warehouses** across Vietnam and **outsources 100% of its transport** to a small group of partner carriers. AcmeFoods' logistics operations run on the **Smartlog Control Tower** platform — the dataset you receive is an export from this platform.
 
-| File | Loại | Mô tả | Granularity | Row count |
+Each Sales Order (**SO**) goes through these time milestones:
+1. **GI date** — Goods Issue date (the day goods leave the warehouse stock).
+2. **ETD planned** — planned time the truck leaves the warehouse.
+3. **ETA planned** — planned time of delivery to the customer.
+4. **ATD actual** — actual time the truck left the warehouse.
+5. **ATA actual** — actual time of delivery to the customer.
+
+The AcmeFoods logistics team needs regular reports / dashboards for their **Supply Chain Manager (SC Manager)**. The Smartlog DA (you, in this scenario) builds those dashboards and insights. Deciding what the right reports are is part of your job.
+
+---
+
+## Glossary
+
+| Term | Meaning |
+|---|---|
+| **SO** | Sales Order — one customer delivery order |
+| **GI** | Goods Issue — goods are picked and released from the warehouse |
+| **ETD / ETA** | Estimated (planned) Time of Departure / Arrival |
+| **ATD / ATA** | Actual Time of Departure / Arrival |
+| **OTIF** | On-Time In-Full — the order was delivered on time **and** in the full quantity |
+| **On-Time** | Delivered by the planned time (ETA) |
+| **In-Full** | Delivered quantity matches the planned quantity |
+| **VFR** | Vehicle Fill Rate — how full the truck is compared to its capacity (by weight or volume) |
+| **CSE** | Case — the unit of quantity (one carton/case of product) |
+| **DC** | Distribution Center (warehouse) |
+| **Carrier** | Third-party transport company that runs the trucks |
+| **Tender** | Booking a truck from a carrier for a trip |
+| **GT** | General Trade — traditional channel (small grocery stores, wholesalers) |
+| **MT** | Modern Trade — supermarkets, convenience stores |
+| **KA** | Key Accounts — large strategic customers |
+| **POSM** | Point-of-Sale Materials — marketing materials (displays, posters), not products for sale |
+| **Tet** | Vietnamese Lunar New Year — the biggest holiday and sales season in Vietnam |
+
+---
+
+## Dataset structure
+
+5 CSV files in this folder, encoded as UTF-8 with BOM (opens directly in Excel):
+
+| File | Type | Description | Granularity | Row count |
 |---|---|---|---|---|
-| `shipments.csv` | Fact | 1 dòng / SO (đơn hàng giao) | Order | ~31k |
-| `trips.csv` | Fact | 1 dòng / chuyến xe vận hành | Trip | ~6.6k |
-| `carriers.csv` | Dim | Danh sách nhà vận tải | Carrier | 11 |
-| `locations.csv` | Dim | Kho + khu vực giao + điểm nhận | Location | 19 |
-| `products.csv` | Dim | Thương hiệu + nhóm hàng + kênh bán | Product | 40 |
+| `shipments.csv` | Fact | 1 row per SO (delivery order) | Order | ~31k |
+| `trips.csv` | Fact | 1 row per truck trip | Trip | ~6.6k |
+| `carriers.csv` | Dim | List of carriers | Carrier | 11 |
+| `locations.csv` | Dim | Warehouses + delivery areas + pickup points | Location | 19 |
+| `products.csv` | Dim | Brands + cargo groups + sales channels | Product | 40 |
 
-Không có quan hệ FK cứng — bạn cần **join theo code** (xem § Relationships).
+There are no enforced foreign keys — you need to **join by code** (see § Relationships).
 
 ---
 
-## Schema chi tiết
+## Detailed schema
 
 ### `shipments.csv`
 
-| Column | Type | Mô tả |
+| Column | Type | Description |
 |---|---|---|
-| `shipment_id` | string | Mã đơn hàng duy nhất, format `SH-2026-XXXXXX` |
-| `warehouse_code` | string | Mã kho xuất hàng, FK → `locations.location_code` (location_type='WAREHOUSE') |
-| `delivery_area` | string | Khu vực giao (tên VN public, vd "Ha Noi", "Mekong 1") — có thể trống |
-| `cargo_group` | string | Nhóm hàng — giá trị chính: `DRY`, `FRESH`, `POSM/OFFBOM`. Data có thể chứa giá trị bất thường — bạn tự profile và quyết định xử lý. |
-| `carrier_code` | string | Mã nhà vận tải, FK → `carriers.carrier_code` — có thể trống |
-| `sales_channel` | string | Kênh bán hàng (MT/GT/KA/DRP/B2B/EXPORT/OTHER) |
-| `vehicle_type` | string | Loại xe vận hành (vd "1.4T" → "11T", có nhiều bậc trung gian) — có thể trống |
-| `gi_date` | date | Ngày xuất kho (Goods Issue) — có thể trống |
-| `etd_planned` | datetime | Thời điểm planned xe rời kho |
-| `eta_planned` | datetime | Thời điểm planned giao tới khách |
-| `atd_actual` | datetime | Thời điểm actual xe rời kho |
-| `ata_actual` | datetime | Thời điểm actual giao tới khách |
-| `planned_qty_cse` | number | Số lượng case (CSE) planned |
-| `planned_weight_kg` | number | Khối lượng planned (kg) |
-| `planned_volume_cbm` | number | Thể tích planned (m³) |
-| `planned_pallets` | number | Số pallet planned |
-| `delivered_qty_cse` | number | Số lượng case (CSE) thực tế giao |
+| `shipment_id` | string | Unique order ID, format `SH-2026-XXXXXX` |
+| `warehouse_code` | string | Shipping warehouse code, FK → `locations.location_code` (location_type='WAREHOUSE') |
+| `delivery_area` | string | Delivery area (Vietnamese region name, e.g. "Ha Noi", "Mekong 1") — may be empty |
+| `cargo_group` | string | Cargo group — main values: `DRY`, `FRESH`, `POSM/OFFBOM`. The data may contain unusual values — profile it and decide how to handle them. |
+| `carrier_code` | string | Carrier code, FK → `carriers.carrier_code` — may be empty |
+| `sales_channel` | string | Sales channel (MT/GT/KA/DRP/B2B/EXPORT/OTHER) |
+| `vehicle_type` | string | Truck type used (e.g. "1.4T" → "11T", with several sizes in between) — may be empty |
+| `gi_date` | date | Goods Issue date — may be empty |
+| `etd_planned` | datetime | Planned time the truck leaves the warehouse |
+| `eta_planned` | datetime | Planned time of delivery to the customer |
+| `atd_actual` | datetime | Actual time the truck left the warehouse |
+| `ata_actual` | datetime | Actual time of delivery to the customer |
+| `planned_qty_cse` | number | Planned quantity in cases (CSE) |
+| `planned_weight_kg` | number | Planned weight (kg) |
+| `planned_volume_cbm` | number | Planned volume (m³) |
+| `planned_pallets` | number | Planned number of pallets |
+| `delivered_qty_cse` | number | Actual quantity delivered in cases (CSE) |
 
 ### `trips.csv`
 
-| Column | Type | Mô tả |
+| Column | Type | Description |
 |---|---|---|
-| `trip_id` | string | Mã chuyến xe, format `TR-2026-XXXXXX` |
-| `tender_date` | date | Ngày phát hành tender (gọi xe) |
-| `eta_operation` | datetime | ETA vận hành |
-| `ata_operation` | datetime | ATA vận hành |
-| `pickup_location` | string | Mã điểm nhận hàng, FK → `locations.location_code` (location_type='PICKUP_LOCATION') |
-| `delivery_area` | string | Khu vực giao (cùng vocab với shipments) |
+| `trip_id` | string | Trip ID, format `TR-2026-XXXXXX` |
+| `tender_date` | date | Date the truck was booked (tendered) |
+| `eta_operation` | datetime | Operational ETA |
+| `ata_operation` | datetime | Operational ATA |
+| `pickup_location` | string | Pickup point code, FK → `locations.location_code` (location_type='PICKUP_LOCATION') |
+| `delivery_area` | string | Delivery area (same values as in shipments) |
 | `carrier_code` | string | FK → `carriers.carrier_code` |
-| `vehicle_type` | string | Loại xe (vd "1.4T" → "11T", "11T_16PL", có nhiều bậc trung gian) |
-| `cargo_group` | string | Nhóm hàng (có thể chứa nhiều group nếu trip ghép) |
-| `vfr_pct` | number | Tỉ lệ tận dụng xe (%), 0-100 |
-| `vfr_by_ton` | number | Tỉ lệ tận dụng theo trọng tải (%) |
-| `vfr_by_volume` | number | Tỉ lệ tận dụng theo thể tích (%) |
-| `planned_ton` | number | Tải trọng kế hoạch (tấn) |
-| `planned_cbm` | number | Thể tích kế hoạch (m³) |
+| `vehicle_type` | string | Truck type (e.g. "1.4T" → "11T", "11T_16PL", with several sizes in between) |
+| `cargo_group` | string | Cargo group (may contain several groups if the trip carries mixed cargo) |
+| `vfr_pct` | number | Vehicle fill rate (%), 0-100 |
+| `vfr_by_ton` | number | Fill rate by weight (%) |
+| `vfr_by_volume` | number | Fill rate by volume (%) |
+| `planned_ton` | number | Planned load weight (tons) |
+| `planned_cbm` | number | Planned load volume (m³) |
 
 ### `carriers.csv`
 
-| Column | Type | Mô tả |
+| Column | Type | Description |
 |---|---|---|
 | `carrier_code` | string | PK, format `CARxxx` |
-| `carrier_name` | string | Tên nhà vận tải |
+| `carrier_name` | string | Carrier name |
 
 ### `locations.csv`
 
-| Column | Type | Mô tả |
+| Column | Type | Description |
 |---|---|---|
 | `location_type` | string | `WAREHOUSE` / `DELIVERY_AREA` / `PICKUP_LOCATION` |
-| `location_code` | string | PK trong từng location_type |
-| `location_name` | string | Tên hiển thị |
-| `location_group` | string | Group cha (chỉ với WAREHOUSE, có thể trống) |
+| `location_code` | string | PK within each location_type |
+| `location_name` | string | Display name |
+| `location_group` | string | Parent group (only for WAREHOUSE, may be empty) |
 
-Lưu ý: `WAREHOUSE` và `PICKUP_LOCATION` là 2 khái niệm khác nhau (kho xuất hàng vs hub trung chuyển). `shipments.warehouse_code` join với `WAREHOUSE`, `trips.pickup_location` join với `PICKUP_LOCATION`.
+Note: `WAREHOUSE` and `PICKUP_LOCATION` are 2 different things (shipping warehouse vs. transit hub). `shipments.warehouse_code` joins to `WAREHOUSE`, `trips.pickup_location` joins to `PICKUP_LOCATION`.
 
 ### `products.csv`
 
-| Column | Type | Mô tả |
+| Column | Type | Description |
 |---|---|---|
-| `dim_type` | string | `BRAND_CARGO` hoặc `SALES_CHANNEL` |
-| `code` | string | PK trong từng dim_type (vd brand code, channel code) |
-| `name` | string | Tên hiển thị |
-| `parent_group` | string | Với `BRAND_CARGO`: cargo group cha. Với `SALES_CHANNEL`: rỗng. |
+| `dim_type` | string | `BRAND_CARGO` or `SALES_CHANNEL` |
+| `code` | string | PK within each dim_type (e.g. brand code, channel code) |
+| `name` | string | Display name |
+| `parent_group` | string | For `BRAND_CARGO`: parent cargo group. For `SALES_CHANNEL`: empty. |
 
 ---
 
@@ -121,38 +145,38 @@ Lưu ý: `WAREHOUSE` và `PICKUP_LOCATION` là 2 khái niệm khác nhau (kho xu
 +-----------------+   +------v-----------+   +------------------+
 |  locations.csv  +---+  shipments.csv   +---+  products.csv    |
 +-----------------+   +------------------+   +------------------+
-        ^                       
-        |                      
-        |                      
-+-------+----------+   
+        ^
+        |
+        |
++-------+----------+
 |  trips.csv       |
 +------------------+
 ```
 
-- `shipments` join `carriers` qua `carrier_code`.
-- `shipments` join `locations` qua `warehouse_code` (filter `location_type='WAREHOUSE'`) hoặc `delivery_area` (filter `location_type='DELIVERY_AREA'`).
-- `shipments` join `products` qua `sales_channel` (filter `dim_type='SALES_CHANNEL'`).
-- `trips` join `locations` qua `pickup_location` (filter `location_type='PICKUP_LOCATION'`).
-- `trips` không link 1-1 với `shipments` — 1 trip có thể chở nhiều shipments hoặc 1 shipment ride nhiều trips. **Bạn tự suy luận khi cần.**
+- `shipments` joins `carriers` on `carrier_code`.
+- `shipments` joins `locations` on `warehouse_code` (filter `location_type='WAREHOUSE'`) or `delivery_area` (filter `location_type='DELIVERY_AREA'`).
+- `shipments` joins `products` on `sales_channel` (filter `dim_type='SALES_CHANNEL'`).
+- `trips` joins `locations` on `pickup_location` (filter `location_type='PICKUP_LOCATION'`).
+- `trips` does not link 1-to-1 with `shipments` — 1 trip can carry many shipments, or 1 shipment can be split across many trips. **Use your own judgment when you need to connect them.**
 
 ---
 
-## Một vài quirk bạn nên biết khi profile
+## Some quirks to know when profiling
 
-1. **Empty cells = NULL**: nhiều cột có giá trị trống thay vì NULL marker. Khi đọc bằng pandas → `NaN`. Trong Excel hiển thị như cell trống.
-2. **Date semantic**: `gi_date` là ngày xuất kho, `eta_planned` là ngày dự kiến giao. **Một SO có thể có `eta_planned` trong window nhưng `gi_date` ngoài window** (vd ETA cuối tháng 4, GI đầu tháng 5).
-3. **Brand không link xuống shipment**: brand chỉ tồn tại trong `products.csv` như dim độc lập, không có FK xuống `shipments`. Nếu muốn phân tích theo brand, bạn cần quyết định cách tiếp cận.
-4. **Over-delivery**: vài đơn có `delivered_qty_cse > planned_qty_cse`. Có thể là data error hoặc giao thêm theo yêu cầu khách — bạn quyết định cách xử lý.
-5. **Multi-cargo trip**: cột `trips.cargo_group` có thể chứa nhiều group cách nhau bằng dấu phẩy (vd "DRY, FRESH") khi 1 chuyến chở nhiều nhóm hàng.
-6. **Vehicle type mix**: nhiều loại xe (1.4T → 11T), capacity khác nhau — so sánh metric cross-type cần cẩn thận.
-7. **Encoding**: file lưu UTF-8 với BOM, Excel/pandas mở thẳng được.
+1. **Empty cells = NULL**: many columns have empty values instead of a NULL marker. In pandas they become `NaN`. In Excel they show as empty cells.
+2. **Date meaning**: `gi_date` is the Goods Issue date, `eta_planned` is the planned delivery date. **An SO can have `eta_planned` inside the window but `gi_date` outside it** (e.g. ETA at the end of April, GI at the start of May).
+3. **Brand is not linked to shipments**: brand only exists in `products.csv` as a standalone dim, with no FK to `shipments`. If you want to analyze by brand, you need to decide how.
+4. **Over-delivery**: some orders have `delivered_qty_cse > planned_qty_cse`. This could be a data error or extra delivery requested by the customer — you decide how to handle it.
+5. **Multi-cargo trips**: `trips.cargo_group` can contain several groups separated by commas (e.g. "DRY, FRESH") when one trip carries mixed cargo.
+6. **Mixed vehicle types**: many truck types (1.4T → 11T) with different capacities — be careful when comparing metrics across types.
+7. **Encoding**: files are saved as UTF-8 with BOM; Excel and pandas open them directly.
 
 ---
 
-## Sample query gợi ý (chỉ để bạn ấm máy, không bắt buộc theo hướng này)
+## Sample queries (just to warm up — you do not have to follow this direction)
 
 ```sql
--- Số lượng shipment theo tháng × kênh bán
+-- Number of shipments by month × sales channel
 SELECT
     DATE_TRUNC('month', gi_date)  AS month,
     sales_channel,

@@ -1,50 +1,52 @@
 # Data Analyst Assessment — Smartlog (customer: AcmeFoods)
 
-Repo này chứa **bài test Data Analyst (1-2 năm kinh nghiệm)** cho vị trí **DA tại Smartlog** + **dataset mẫu** để bạn làm tại nhà.
+This repo contains the **Data Analyst take-home assessment** for the **DA role at Smartlog**, plus a **sample dataset** for you to work on at home.
 
-> **Về vai trò**: Smartlog cung cấp nền tảng **Control Tower** + đội ngũ DA hỗ trợ phân tích / build dashboard cho khách hàng logistics. DA Smartlog làm việc trên dữ liệu vận hành của khách, output chính là **dashboard + insight report** cho stakeholder phía khách (vd Supply Chain Manager).
+> **Who is this for?** We use the same assessment for all DA candidates, from **interns** to **experienced analysts**. You do not need to do everything — we look at how you think, and we adjust our expectations to your level of experience.
 
-> **Về dataset**: Đây là **dữ liệu hư cấu** mô phỏng hoạt động vận chuyển FMCG của 1 khách hàng giả định ("AcmeFoods"). Tên công ty, nhà vận tải, kho, brand đều là tên giả; số liệu giữ phân phối thực tế để bài phân tích có ý nghĩa.
+> **About the role**: Smartlog provides a **Control Tower** platform plus a DA team that helps logistics customers analyze their data and build dashboards. A Smartlog DA works on the customer's operational data. The main outputs are **dashboards + insight reports** for the customer's stakeholders (for example, the Supply Chain Manager).
 
----
-
-## Bắt đầu từ đâu
-
-1. Đọc **[`test/assessment.md`](test/assessment.md)** — đề bài, yêu cầu, deliverable.
-2. Đọc **[`dataset/README.md`](dataset/README.md)** — schema 5 file CSV, quan hệ join, KPI cần biết (OTIF, On-Time, In-Full, VFR).
-3. Profile dataset bằng tool bạn quen (SQL / Python / Excel / BI tool — tự do chọn).
-4. Làm bài theo hướng dẫn trong `assessment.md`.
+> **About the dataset**: This is **fictional data** that simulates the FMCG transport operations of a made-up customer ("AcmeFoods"). Company, carrier, warehouse and brand names are all fake. The numbers keep realistic distributions so the analysis is meaningful.
 
 ---
 
-## Cấu trúc repo
+## Where to start
+
+1. Read **[`test/assessment.md`](test/assessment.md)** — the task, requirements and deliverables.
+2. Read **[`dataset/README.md`](dataset/README.md)** — schema of the 5 CSV files, how to join them, and key terms (OTIF, On-Time, In-Full, VFR).
+3. Profile the dataset with any tool you like (SQL / Python / Excel / BI tool — your choice).
+4. Complete the tasks in `assessment.md`.
+
+---
+
+## Repo structure
 
 ```
 .
-├── README.md                  # File này
+├── README.md                  # This file
 ├── dataset/
-│   ├── README.md              # Schema + business context — ĐỌC TRƯỚC
-│   ├── shipments.csv          # Fact: đơn hàng giao (OTIF)
-│   ├── trips.csv              # Fact: chuyến xe (VFR)
-│   ├── carriers.csv           # Dim: nhà vận tải
-│   ├── locations.csv          # Dim: kho + khu vực giao
-│   └── products.csv           # Dim: brand + cargo group
+│   ├── README.md              # Schema + business context — READ THIS FIRST
+│   ├── shipments.csv          # Fact: delivery orders (OTIF)
+│   ├── trips.csv              # Fact: truck trips (VFR)
+│   ├── carriers.csv           # Dim: carriers (transport companies)
+│   ├── locations.csv          # Dim: warehouses + delivery areas
+│   └── products.csv           # Dim: brands + cargo groups
 └── test/
-    └── assessment.md          # Đề bài
+    └── assessment.md          # The task
 ```
 
 ---
 
-## Thời gian & nộp bài
+## Time & submission
 
-- **Timebox**: ~3 giờ target, hard-cap 4 giờ (đừng làm quá 4 giờ — bọn mình ưu tiên cách bạn quản lý thời gian hơn là làm hết).
-- **Hạn**: 48 giờ sau khi nhận đề.
-- **Submit**: gửi link Google Drive (hoặc file zip qua email) chứa file phân tích (notebook / Excel / PDF / BI export) + ít nhất 1 chart + narrative ngắn. Gửi về email recruiter với subject `[DA Assessment] <Tên ứng viên>`. Chi tiết deliverable xem `test/assessment.md`.
+- **Timebox**: target ~3 hours, hard cap 4 hours. Please do not spend more than 4 hours — we care more about how you manage your time than about finishing everything.
+- **Deadline**: 48 hours after you receive the test.
+- **Submit**: send a Google Drive link (or a zip file by email) with your analysis files (notebook / Excel / PDF / BI export) + at least 1 chart + a short written summary. Email it to the recruiter with the subject `[DA Assessment] <Your name>`. See `test/assessment.md` for full deliverable details.
 
 ---
 
-## Câu hỏi
+## Questions
 
-Nếu có gì chưa rõ về dataset hoặc business context, cứ ghi vào phần "Assumptions" trong bài nộp — bọn mình muốn xem cách bạn xử lý ambiguity hơn là việc bạn đoán đúng 100%.
+If something about the dataset or business context is unclear, write it down in an "Assumptions" section in your submission. We want to see how you handle ambiguity, not whether you guess 100% right.
 
-Chúc bạn làm bài vui :)
+Have fun :)
