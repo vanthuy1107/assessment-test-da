@@ -11,7 +11,7 @@ This is a take-home test to help us understand how you **approach a new customer
 ## General information
 
 - **Who takes this test**: all DA candidates, from **interns** to **experienced analysts**. We adjust our expectations to your level of experience — an intern is not expected to produce the same depth as a senior analyst.
-- **Time**: target ~3 hours, hard cap 4 hours (timeboxed — please do not spend more than 4 hours; we care more about how you manage your time than about finishing everything).
+- **Suggested time**: about 3-4 hours. This is a guideline, not a strict limit — if you need more time to finish the test, feel free to take it.
 - **Deadline**: 48 hours after you receive the test.
 - **Tools**: your choice — SQL (DuckDB/SQLite/Postgres, etc.), Python (pandas/polars), R, Excel/Google Sheets, Power BI, Tableau, Metabase, Looker Studio... anything you are comfortable with.
 - **Language**: English or Vietnamese — both are fine, just use one consistently.
@@ -106,6 +106,7 @@ Submit 1 zip file or a Google Drive link with:
 2. **Code/queries** you used (if any): `.sql`, `.py`, `.xlsx` files... in a `code/` folder.
 3. **Chart exports** (if charts cannot be embedded in the report).
 4. **A `notes.md` file** (1 page) — the "behind the scenes":
+   - Roughly how much time did you spend in total?
    - Which part did you spend the most time on? Why?
    - Were there any assumptions or approaches you considered and then dropped? 1-2 short sentences for each.
    - If you had 2 more hours, what would you do next?

@@ -39,7 +39,7 @@ This repo contains the **Data Analyst take-home assessment** for the **DA role a
 
 ## Time & submission
 
-- **Timebox**: target ~3 hours, hard cap 4 hours. Please do not spend more than 4 hours — we care more about how you manage your time than about finishing everything.
+- **Suggested time**: about 3-4 hours. This is a guideline, not a strict limit — if you need more time to finish the test, feel free to take it.
 - **Deadline**: 48 hours after you receive the test.
 - **Submit**: send a Google Drive link (or a zip file by email) with your analysis files (notebook / Excel / PDF / BI export) + at least 1 chart + a short written summary. Email it to the recruiter with the subject `[DA Assessment] <Your name>`. See `test/assessment.md` for full deliverable details.
 
