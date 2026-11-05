@@ -2,7 +2,7 @@
 
 Hi, and thank you for applying for the **Data Analyst** role at **Smartlog**.
 
-Smartlog provides a **Control Tower** platform plus a DA team that helps logistics customers analyze their data and build dashboards. As a Smartlog DA, you will **work on the customer's operational data**. The main outputs are **dashboards + insight reports** for the customer's stakeholders (usually the Supply Chain Manager). This test simulates exactly that situation — you have just been assigned to the project of a fictional customer, **AcmeFoods**.
+[Smartlog](https://gosmartlog.com/) provides a **Control Tower** platform plus a DA team ([HeliX](https://helix.smartlogvn.com/)) that helps logistics customers analyze their data and build dashboards. As a Smartlog DA, you will **work on the customer's operational data**. The main outputs are **dashboards + insight reports** for the customer's stakeholders (usually the Supply Chain Manager). This test simulates exactly that situation — you have just been assigned to the project of a fictional customer, **AcmeFoods**.
 
 This is a take-home test to help us understand how you **approach a new customer's data**, **ask the right questions**, and **tell a story to business stakeholders (not internal developers)**. There is NO single "right answer" — what matters is how you think.
 

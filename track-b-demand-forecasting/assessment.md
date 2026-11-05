@@ -2,7 +2,7 @@
 
 Hi, and thank you for applying to **Smartlog**.
 
-Besides the Control Tower dashboards, Smartlog also builds **demand forecasting** for its customers: forecasts that tell a manufacturer how much of each product it will sell, so it can plan production, stock and replenishment. This track simulates that work. You join the project of a fictional customer, **AcmeBrew Vietnam**, receive two years of daily sales history, and produce a six-month daily forecast for every product.
+Besides the Control Tower dashboards, the [HeliX](https://helix.smartlogvn.com/) team at [Smartlog](https://gosmartlog.com/) also builds **demand forecasting** for its customers: forecasts that tell a manufacturer how much of each product it will sell, so it can plan production, stock and replenishment. This track simulates that work. You join the project of a fictional customer, **AcmeBrew Vietnam**, receive two years of daily sales history, and produce a six-month daily forecast for every product.
 
 **You may use any method you like**: classical statistics, machine learning, deep learning, pretrained foundation models, heuristics, or a combination. We do not have a preferred model. The method has to fit the data, and **you have to be able to explain why you chose it**. A well-justified seasonal baseline is worth more to us than a complex model nobody can explain.
 

@@ -2,7 +2,31 @@
 
 This repo contains the **take-home assessment for data roles at Smartlog**. There are **two tracks**. **Choose one**: the one that fits your profile and the work you want to do.
 
-> **About Smartlog**: Smartlog provides a **Control Tower** platform and a data team that helps logistics and manufacturing customers make sense of their data. That work covers dashboards and insight reports, and also forecasting and planning analytics.
+## About us
+
+### Smartlog — [gosmartlog.com](https://gosmartlog.com/)
+
+**Smartlog** (Smartlog Supply Chain Solutions JSC, Ho Chi Minh City) builds supply chain software for manufacturers, distributors and logistics providers in Vietnam. Its products cover the main operational flows of a supply chain:
+
+| Product | Area |
+|---|---|
+| **STM** | Transport management |
+| **SWM** | Warehouse management |
+| **SSM** | Operations |
+| **STX** | Freight exchange |
+| **COS** | Container operations |
+
+These systems run our customers' daily operations, and the data they produce is what the data team works with.
+
+### HeliX — [helix.smartlogvn.com](https://helix.smartlogvn.com/)
+
+**HeliX** is Smartlog's data processing and solution R&D hub, and the team you would join. It builds **Smartlog Control Tower**, which brings a customer's TMS, WMS and ERP data together in one place: live dashboards, alerts and demand forecasts built on a catalogue of 103+ standardised logistics KPIs. The work runs from raw operational tables to standardised KPIs to dashboards, and further into forecasting and network optimisation.
+
+The two tracks below mirror that work. **Track A** is the Control Tower side: turning operational data into KPIs and recommendations. **Track B** is the forecasting side: predicting demand so that capacity, stock and fleet can be planned ahead.
+
+The HeliX website has the [dashboard library](https://helix.smartlogvn.com/dashboards), the [KPI catalogue](https://helix.smartlogvn.com/kpi) and the [team](https://helix.smartlogvn.com/about), which are useful background for either track.
+
+---
 
 > **About the data**: both datasets come from real operations, with every company, product, carrier and location name replaced by fictional names. Distributions and patterns are kept, so the analysis is meaningful.
 
