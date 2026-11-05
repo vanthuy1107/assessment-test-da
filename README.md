@@ -20,7 +20,18 @@ These systems run our customers' daily operations, and the data they produce is 
 
 ### HeliX — [helix.smartlogvn.com](https://helix.smartlogvn.com/)
 
-**HeliX** is Smartlog's data processing and solution R&D hub, and the team you would join. It builds **Smartlog Control Tower**, which brings a customer's TMS, WMS and ERP data together in one place: live dashboards, alerts and demand forecasts built on a catalogue of 103+ standardised logistics KPIs. The work runs from raw operational tables to standardised KPIs to dashboards, and further into forecasting and network optimisation.
+**HeliX** is Smartlog's data processing and solution R&D hub, and the team you would join. It builds **Smartlog Control Tower**, which brings a customer's TMS, WMS and ERP data together in one place, built on a catalogue of 103+ standardised logistics KPIs. The work runs from raw operational tables to standardised KPIs to dashboards, and further into forecasting and optimisation.
+
+HeliX offers **6 solution modules** on one data platform:
+
+| # | Module | What it does |
+|---|---|---|
+| 1 | **Control Tower** | Real-time, end-to-end visibility of operations, with alerts and 103+ standardised KPIs in one interface |
+| 2 | **Demand Forecasting** | Machine-learning forecasts of demand by SKU, region and route, with accuracy and bias tracking |
+| 3 | **Digital Twin** | Live 3D/2D view of docks, yards and warehouse floors; flow simulation and storage heatmaps are on the roadmap |
+| 4 | **AI Analyst** | Ask operational data questions in plain language and get the root cause, with every answer traceable to its SQL |
+| 5 | **Advanced Analytics** | Deep-dive supply chain analysis beyond the standard dashboards |
+| 6 | **Network Optimization** | Distribution network design and simulation (future vision) |
 
 The two tracks below mirror that work. **Track A** is the Control Tower side: turning operational data into KPIs and recommendations. **Track B** is the forecasting side: predicting demand so that capacity, stock and fleet can be planned ahead.
 
