@@ -1,4 +1,4 @@
-# Dataset — Smartlog × AcmeFoods (Sample, Feb-Apr 2026)
+# Dataset — Track A: Smartlog × AcmeFoods (Sample, Feb-Apr 2026)
 
 A sample dataset **exported from Smartlog Control Tower** for a made-up customer — **AcmeFoods Vietnam** — an FMCG confectionery / snack food company, covering **3 months of operations, Feb-Apr 2026 (2026-02-01 → 2026-04-30)**.
 

@@ -1,4 +1,4 @@
-# Data Analyst Assessment — Smartlog (customer: AcmeFoods)
+# Track A — Logistics Operations Analytics Assessment (customer: AcmeFoods)
 
 Hi, and thank you for applying for the **Data Analyst** role at **Smartlog**.
 

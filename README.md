@@ -1,21 +1,29 @@
-# Data Analyst Assessment — Smartlog (customer: AcmeFoods)
+# Data Analyst Assessment — Smartlog
 
-This repo contains the **Data Analyst take-home assessment** for the **DA role at Smartlog**, plus a **sample dataset** for you to work on at home.
+This repo contains the **take-home assessment for data roles at Smartlog**. There are **two tracks**. **Choose one**: the one that fits your profile and the work you want to do.
 
-> **Who is this for?** We use the same assessment for all DA candidates, from **interns** to **experienced analysts**. You do not need to do everything — we look at how you think, and we adjust our expectations to your level of experience.
+> **About Smartlog**: Smartlog provides a **Control Tower** platform and a data team that helps logistics and manufacturing customers make sense of their data. That work covers dashboards and insight reports, and also forecasting and planning analytics.
 
-> **About the role**: Smartlog provides a **Control Tower** platform plus a DA team that helps logistics customers analyze their data and build dashboards. A Smartlog DA works on the customer's operational data. The main outputs are **dashboards + insight reports** for the customer's stakeholders (for example, the Supply Chain Manager).
-
-> **About the dataset**: This is **fictional data** that simulates the FMCG transport operations of a made-up customer ("AcmeFoods"). Company, carrier, warehouse and brand names are all fake. The numbers keep realistic distributions so the analysis is meaningful.
+> **About the data**: both datasets come from real operations, with every company, product, carrier and location name replaced by fictional names. Distributions and patterns are kept, so the analysis is meaningful.
 
 ---
 
-## Where to start
+## Choose your track
 
-1. Read **[`test/assessment.md`](test/assessment.md)** — the task, requirements and deliverables.
-2. Read **[`dataset/README.md`](dataset/README.md)** — schema of the 5 CSV files, how to join them, and key terms (OTIF, On-Time, In-Full, VFR).
-3. Profile the dataset with any tool you like (SQL / Python / Excel / BI tool — your choice).
-4. Complete the tasks in `assessment.md`.
+| | **Track A: Logistics Operations Analytics** | **Track B: Demand Forecasting** |
+|---|---|---|
+| Fictional customer | AcmeFoods (FMCG confectionery) | AcmeBrew (packaged beverages) |
+| The question | "What is happening in our transport operations, and what should we fix first?" | "How much of each product will we sell every day for the next 6 months?" |
+| Data | 3 months of shipments and truck trips | 2 years of daily sales for 108 SKUs |
+| Main output | Data profiling, KPI analysis, a reply to a Supply Chain Manager, a dashboard widget | A 6-month daily forecast per SKU, a backtest, and a memo to the Head of Demand Planning |
+| Skills it shows | SQL/Excel/BI, KPI definition, business storytelling | Time-series analysis, statistics/ML/DL, validation design, explaining a model |
+| Method | Any tool | **Any model** (statistical, ML, DL, foundation models, heuristics) as long as you can justify it |
+| Time | ~3–4 hours of work, **48 hours** deadline | ~15–25 hours of work, **7 days** deadline |
+| Start here | [`track-a-logistics/assessment.md`](track-a-logistics/assessment.md) | [`track-b-demand-forecasting/assessment.md`](track-b-demand-forecasting/assessment.md) |
+
+Not sure which one to choose? If you enjoy turning operational data into dashboards and recommendations, choose **A**. If you enjoy building and validating predictive models, choose **B**. Doing both is not required and gives no extra credit.
+
+> **Who is this for?** All candidates, from **interns** to **experienced analysts and data scientists**. We look at how you think, and we adjust our expectations to your level of experience.
 
 ---
 
@@ -23,30 +31,24 @@ This repo contains the **Data Analyst take-home assessment** for the **DA role a
 
 ```
 .
-├── README.md                  # This file
-├── dataset/
-│   ├── README.md              # Schema + business context — READ THIS FIRST
-│   ├── shipments.csv          # Fact: delivery orders (OTIF)
-│   ├── trips.csv              # Fact: truck trips (VFR)
-│   ├── carriers.csv           # Dim: carriers (transport companies)
-│   ├── locations.csv          # Dim: warehouses + delivery areas
-│   └── products.csv           # Dim: brands + cargo groups
-└── test/
-    └── assessment.md          # The task
+├── README.md                          # This file
+├── track-a-logistics/
+│   ├── assessment.md                  # Track A: the task
+│   └── dataset/                       # shipments, trips, carriers, locations, products + README
+└── track-b-demand-forecasting/
+    ├── assessment.md                  # Track B: the task
+    └── dataset/                       # sales_history, products, warehouses, calendar,
+                                       # submission_template + README
 ```
 
 ---
 
-## Time & submission
+## Submission
 
-- **Suggested time**: about 3-4 hours. This is a guideline, not a strict limit — if you need more time to finish the test, feel free to take it.
-- **Deadline**: 48 hours after you receive the test.
-- **Submit**: send a Google Drive link (or a zip file by email) with your analysis files (notebook / Excel / PDF / BI export) + at least 1 chart + a short written summary. Email it to the recruiter with the subject `[DA Assessment] <Your name>`. See `test/assessment.md` for full deliverable details.
-
----
+Send a Google Drive link or a zip file to the recruiter with the subject `[DA Assessment – Track A] <Your name>` or `[DA Assessment – Track B] <Your name>`. Each `assessment.md` lists exactly what to include.
 
 ## Questions
 
-If something about the dataset or business context is unclear, write it down in an "Assumptions" section in your submission. We want to see how you handle ambiguity, not whether you guess 100% right.
+If something about the data or the business context is unclear, write your assumption down in your submission ("I assume X because Y") and continue. We want to see how you handle ambiguity, not whether you guess right.
 
 Have fun :)

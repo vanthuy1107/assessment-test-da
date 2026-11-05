@@ -1,0 +1,7 @@
+warehouse_code,warehouse_name,region
+DC-N1,North distribution center,North
+DC-C1,Central distribution center,Central
+DC-H1,Highlands distribution center,Central Highlands
+DC-S1,South distribution center 1,South
+DC-S2,South distribution center 2,South
+DC-UNK,Not recorded (lines without a storage location),
